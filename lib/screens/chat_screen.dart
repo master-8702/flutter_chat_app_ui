@@ -1,6 +1,8 @@
-import 'package:chat_ui/models/message_model.dart';
-import 'package:chat_ui/models/user_model.dart';
 import 'package:flutter/material.dart';
+
+import 'package:chat_ui/models/user_model.dart';
+import 'package:chat_ui/widgets/chat_mesage.dart';
+import 'package:chat_ui/models/message_model.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key, required this.user});
@@ -44,22 +46,23 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(
           children: [
             Expanded(
-              child: ListView.builder(
-                itemCount: chats.length,
-                itemBuilder: (context, index) {
-                  return Row(
-                    children: [
-                      SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: Card(
-                            child: Text(
-                              chats[index].text,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          )),
-                    ],
-                  );
-                },
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30)),
+                child: ListView.builder(
+                  reverse: true,
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                  ),
+                  itemCount: chats.length,
+                  itemBuilder: (context, index) {
+                    final Message message = chats[index];
+                    final bool isMe = message.sender.id == currentUser.id;
+                    return ChatMessage(message: message, isMe: isMe);
+                  },
+                ),
               ),
             )
           ],
@@ -68,3 +71,6 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 }
+
+
+
