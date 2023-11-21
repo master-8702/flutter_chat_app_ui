@@ -1,3 +1,4 @@
+import 'package:chat_ui/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:chat_ui/models/user_model.dart';
@@ -40,7 +41,15 @@ class FavoriteContact extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return Favorite(user: favoriteContacts[index]);
+                  return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ChatScreen(user: favoriteContacts[index])));
+                      },
+                      child: Favorite(user: favoriteContacts[index]));
                 },
               ),
             )
