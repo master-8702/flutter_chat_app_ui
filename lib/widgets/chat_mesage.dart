@@ -40,6 +40,7 @@ class _ChatMessageState extends State<ChatMessage> {
                 ),
 
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Row(
                 children: [
